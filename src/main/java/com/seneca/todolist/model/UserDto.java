@@ -1,5 +1,6 @@
 package com.seneca.todolist.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -38,6 +39,7 @@ public class UserDto implements UserDetails, Serializable {
   private Date createdAt;
   @JsonProperty(access = Access.READ_ONLY)
   private Date updatedAt;
+  @JsonIgnore
   private List<TaskEntity> taskList;
 
   /**
