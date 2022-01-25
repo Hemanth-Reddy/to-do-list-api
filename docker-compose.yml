@@ -1,0 +1,35 @@
+version: '2'
+
+services:
+  app:
+    image: 'hemanth159/to-do-list:0.0.1-SNAPSHOT'
+    container_name: app
+    ports:
+      - "8080:8080"
+    depends_on:
+      dbpostgre:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://dbpostgre:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=seneca123$$
+    networks:
+      - db-network
+          
+  dbpostgre:
+    image: 'postgres'
+    container_name: dbpostgre
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=seneca123$$
+    networks:
+      - db-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      timeout: 2s
+      retries: 1
+
+networks:
+  db-network:
