@@ -1,6 +1,5 @@
 package com.seneca.todolist.service;
 
-import com.seneca.todolist.config.JwtTokenProvider;
 import com.seneca.todolist.entity.TaskEntity;
 import com.seneca.todolist.entity.UserEntity;
 import com.seneca.todolist.model.TaskInfoDto;
@@ -34,12 +33,6 @@ public class TaskServiceImpl implements TaskService {
    */
   @Autowired
   private UserService iuserService;
-
-  /**
-   * Jwt Token provider for providing the details of the token.
-   */
-  @Autowired
-  private JwtTokenProvider jwtTokenProvider;
 
   /**
    * Utility class for task related dtos and entities.
