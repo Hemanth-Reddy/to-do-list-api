@@ -36,15 +36,17 @@ public interface TaskService {
    * This method is to retrieve the task with the given task id.
    *
    * @param token This is the jwt token to identify the logged in user.
+   * @param taskId    This is the id associated with the task.
    * @return TaskResponseDto This contains task information requested by task
    *         id.
    */
-  TaskResponseDto getTaskById(String id, String token);
+  TaskResponseDto getTaskById(String taskId, String token);
 
   /**
    * This method is to retrieve all the tasks that are completed by the user.
    *
-   * @param token This is the jwt token to identify the logged in user.
+   * @param status Task status completed/not.
+   * @param token  This is the jwt token to identify the logged in user.
    * @return TaskListResponseDto This contains all the completed tasks.
    */
   TaskListResponseDto getAllTasksByCompletedStatus(Boolean status,
@@ -53,13 +55,14 @@ public interface TaskService {
   /**
    * This method is to update the task w.r.t to the given id.
    *
-   * @param taskInfoDto This is task information updated by the user.
-   * @param taskId      This is the task id of a task that user is willing to
-   *                    update.
-   * @param token       This is the jwt token to identify the logged in user.
+   * @param taskInfoUpdateDto This is task information updated by the user.
+   * @param taskId                This is the task id of a task that user is willing
+   *                          to update.
+   * @param token             This is the jwt token to identify the logged in
+   *                          user.
    * @return TaskListResponseDto This contains all the completed tasks.
    */
-  TaskResponseDto updateTaskById(TaskInfoUpdateDto taskInfoUpdateDto, String id,
+  TaskResponseDto updateTaskById(TaskInfoUpdateDto taskInfoUpdateDto, String taskId,
       String token);
 
   /**
@@ -78,8 +81,10 @@ public interface TaskService {
   /**
    * This method is to delete the task by taskId and email from the token.
    *
+   * @param taskId    This is the task id of a task that user is willing to update.
    * @param token This is the jwt token to identify the logged in user.
-   * @return true/false This is the status whether deletion is failed or success.
+   * @return true/false This is the status whether deletion is failed or
+   *         success.
    */
   boolean deleteTaskById(String token, String taskId);
 

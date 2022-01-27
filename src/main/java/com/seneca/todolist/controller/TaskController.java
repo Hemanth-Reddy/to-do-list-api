@@ -54,13 +54,13 @@ public class TaskController {
    * @throws InvalidRequestException thrown in case of an invalid request.
    */
   @PostMapping("")
-  public ResponseEntity<Object> addTask(HttpServletRequest request,
-      @RequestBody TaskInfoDto taskInfoDto) throws InvalidRequestException {
+  public ResponseEntity<Object> addTask(final HttpServletRequest request,
+      final @RequestBody TaskInfoDto taskInfoDto) throws InvalidRequestException {
 
     if (!StringUtils.hasText(taskInfoDto.getDescription().trim())) {
       throw new InvalidRequestException("Task description cannot be null.");
     }
-    TaskResponseDto taskResponseDto = itaskService.addTask(taskInfoDto,
+    final TaskResponseDto taskResponseDto = itaskService.addTask(taskInfoDto,
         request.getHeader("Authorization"));
     return new ResponseEntity<>(taskResponseDto, HttpStatus.CREATED);
   }
@@ -73,7 +73,7 @@ public class TaskController {
    * @return Returns all the tasks of the logged in user.
    */
   @GetMapping("")
-  public ResponseEntity<Object> getAllTasks(HttpServletRequest request) {
+  public ResponseEntity<Object> getAllTasks(final HttpServletRequest request) {
     return new ResponseEntity<>(
         itaskService.getAllTasks(request.getHeader(AUTHORIZATION)),
         HttpStatus.OK);
@@ -87,8 +87,8 @@ public class TaskController {
    * @return This returns the task info w.r.t the id.
    */
   @GetMapping("/{id}")
-  public ResponseEntity<Object> getTaskById(@PathVariable("id") String taskId,
-      HttpServletRequest request) {
+  public ResponseEntity<Object> getTaskById(final @PathVariable("id") String taskId,
+      final HttpServletRequest request) {
     if (!StringUtils.hasText(taskId.trim())) {
       throw new ResourceNotFoundException(
           "Task with the given id does not exist");
@@ -107,7 +107,7 @@ public class TaskController {
    */
   @GetMapping(value = "", params = "completed")
   public ResponseEntity<Object> getTasksByCompletedStatus(
-      @RequestParam("completed") boolean status, HttpServletRequest request) {
+      final @RequestParam("completed") boolean status, final HttpServletRequest request) {
     return new ResponseEntity<>(itaskService.getAllTasksByCompletedStatus(
         status, request.getHeader("Authorization")), HttpStatus.OK);
   }
@@ -119,12 +119,12 @@ public class TaskController {
    * @param taskId            This is the task id corresponding to the task that
    *                          needs to be updated.
    * @param taskInfoUpdateDto This is the model class for updating task info.
-   * @return This returns the updated task details.
+   * @return taskResponseDto  Returns the updated task details.
    */
   @PutMapping("/{id}")
-  public ResponseEntity<Object> updateTaskById(HttpServletRequest request,
-      @PathVariable("id") String taskId,
-      @Valid @RequestBody TaskInfoUpdateDto taskInfoUpdateDto) {
+  public ResponseEntity<Object> updateTaskById(final HttpServletRequest request,
+      final @PathVariable("id") String taskId,
+      final @Valid @RequestBody TaskInfoUpdateDto taskInfoUpdateDto) {
 
     if (!StringUtils.hasText(taskId.trim())) {
       throw new ResourceNotFoundException(
@@ -147,8 +147,8 @@ public class TaskController {
    */
   @GetMapping(value = "", params = { "limit", "skip" })
   public ResponseEntity<Object> getPaginatedTasks(
-      @RequestParam("limit") Integer limit, @RequestParam("skip") Integer skip,
-      HttpServletRequest request) {
+      final @RequestParam("limit") Integer limit, final @RequestParam("skip") Integer skip,
+      final HttpServletRequest request) {
     return new ResponseEntity<>(itaskService.getPaginatedTasks(
         request.getHeader("Authorization"), limit, skip), HttpStatus.OK);
   }
@@ -157,16 +157,17 @@ public class TaskController {
    * This method deletes the task of the logged in user by id.
    *
    * @param request This is the HttpServletRequest.
-   * @return taskId This is the id representing task.
+   * @param taskId This is the id representing task.
+   * @return status Status of the delete action.
    */
   @DeleteMapping("/{id}")
-  public ResponseEntity<Object> deleteTaskById(HttpServletRequest request,
-      @PathVariable("id") String taskId) {
+  public ResponseEntity<Object> deleteTaskById(final HttpServletRequest request,
+      final @PathVariable("id") String taskId) {
     if (!StringUtils.hasText(taskId.trim())) {
       throw new ResourceNotFoundException(
           "Task with the given id does not exist");
     }
-    Boolean status = itaskService
+    final Boolean status = itaskService
         .deleteTaskById(request.getHeader("Authorization"), taskId);
     return status ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
         : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

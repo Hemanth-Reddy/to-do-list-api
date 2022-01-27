@@ -17,7 +17,7 @@ public class InvalidRequestException extends RuntimeException {
    *
    * @param message This is the message associated with this class.
    */
-  public InvalidRequestException(String message) {
+  public InvalidRequestException(final String message) {
     super(message);
   }
 }

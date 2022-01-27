@@ -16,6 +16,7 @@ import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,7 +47,7 @@ public class UserAuthenticationController {
    */
   @PostMapping("/login")
   public ResponseEntity<?> loginUser(
-      @Valid @RequestBody LoginRequestDto loginRequestDto) {
+      final @Valid @RequestBody LoginRequestDto loginRequestDto) {
 
     UserResponseDto userResponse = iuserService.loginUser(loginRequestDto);
 
@@ -82,6 +83,18 @@ public class UserAuthenticationController {
     MappingJacksonValue mapping = new MappingJacksonValue(userResponse);
     mapping.setFilters(filterProvider);
     return new ResponseEntity<>(mapping, HttpStatus.CREATED);
+  }
+  
+  /**
+   * This is the method for user to logout.
+   * @param token This is the authentication token.
+   * @return status success/failed.
+   */
+  @PostMapping("/logout")
+  public ResponseEntity<?> logoutUser(@RequestHeader("Authorization") final String token) {
+
+    Boolean status = iuserService.logoutUser(token);
+    return new ResponseEntity<>(status ? "success" : "failed", HttpStatus.OK);
   }
 
 }

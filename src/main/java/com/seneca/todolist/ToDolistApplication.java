@@ -3,7 +3,9 @@ package com.seneca.todolist;
 import com.seneca.todolist.authentication.AuthenticationInterceptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -17,6 +19,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  *
  */
 @SpringBootApplication
+@EnableCaching
+@EnableScheduling
 public class ToDolistApplication implements WebMvcConfigurer {
 
   /**

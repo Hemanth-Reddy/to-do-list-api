@@ -16,11 +16,21 @@ import javax.validation.constraints.NotNull;
 @JsonInclude(Include.NON_NULL)
 public class TaskInfoUpdateDto implements Serializable {
 
+  /**
+   * Description of the task.
+   */
   private Optional<@NotBlank(message = "description cannot be null or empty") String> description;
+  
+  /**
+   * Completed status of the task.
+   */
   private Optional<@NotNull(
       message = "completed cannot be null and it should be either 'true' or 'false'."
       ) Boolean> completed;
 
+  /**
+   * Default constructor.
+   */
   public TaskInfoUpdateDto() {
     super();
   }
@@ -33,8 +43,8 @@ public class TaskInfoUpdateDto implements Serializable {
    * @param completed This is the completed status of the task.
    */
   public TaskInfoUpdateDto(
-      Optional<@NotBlank(message = "description cannot be null or empty") String> description,
-      Optional<@NotNull(
+      final Optional<@NotBlank(message = "description cannot be null or empty") String> description,
+      final Optional<@NotNull(
           message = "completed cannot be null and it should be either 'true' or 'false'."
           ) Boolean> completed) {
     super();
@@ -42,20 +52,37 @@ public class TaskInfoUpdateDto implements Serializable {
     this.completed = completed;
   }
 
+  /**
+   * Getter for optionalDescription.
+   * @return optionalDescription returns the optionalDescription object of the task.
+   */
   public Optional<String> getDescription() {
     return description;
   }
 
-  public void setDescription(String description) {
+  /**
+   * Setter for description.
+   * @param description description of the task.
+   */
+  public void setDescription(final String description) {
     Optional<String> optionalDescription = Optional.of(description);
     this.description = optionalDescription;
   }
 
+  /**
+   * Getter for optionalCompleted.
+   * @return optionalCompleted returns the optionalCompleted object with 
+   * completed status of the task.
+   */
   public Optional<Boolean> getCompleted() {
     return completed;
   }
 
-  public void setCompleted(Boolean completed) {
+  /**
+   * Setter for completed.
+   * @param completed completed status of the task.
+   */
+  public void setCompleted(final Boolean completed) {
     Optional<Boolean> optionalCompleted = Optional.of(completed);
     this.completed = optionalCompleted;
   }

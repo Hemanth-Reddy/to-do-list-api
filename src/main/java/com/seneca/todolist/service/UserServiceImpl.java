@@ -1,6 +1,7 @@
 package com.seneca.todolist.service;
 
 import com.seneca.todolist.config.JwtTokenProvider;
+import com.seneca.todolist.entity.JwtBlockListEntity;
 import com.seneca.todolist.entity.UserEntity;
 import com.seneca.todolist.exception.ImageException;
 import com.seneca.todolist.exception.ResourceNotFoundException;
@@ -8,8 +9,10 @@ import com.seneca.todolist.model.LoginRequestDto;
 import com.seneca.todolist.model.UserDto;
 import com.seneca.todolist.model.UserResponseDto;
 import com.seneca.todolist.model.UserUpdateDto;
+import com.seneca.todolist.repository.IJwtBlockListRepository;
 import com.seneca.todolist.repository.UserRepository;
 import com.seneca.todolist.utility.UserUtility;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
   /**
    * This interface connects with the database via java persistence api and used
-   * for interacting with database.
+   * for interacting with database. Used for user entity.
    */
   @Autowired
   public UserRepository iuserRepository;
@@ -53,6 +56,13 @@ public class UserServiceImpl implements UserService {
    */
   @Autowired
   private PasswordEncoder bcryptPasswordEncoder;
+  
+  /**
+   * This interface connects with the database via java persistence api and used
+   * for interacting with database. Used for block list entity.
+   */
+  @Autowired
+  public IJwtBlockListRepository iJwtBlockListRepository;
 
   /**
    * This method is used for login purpose. Authentication of details happens in
@@ -284,4 +294,17 @@ public class UserServiceImpl implements UserService {
     final UserEntity user = getUserByToken(token);
     return userUtility.convertToUserDto(user);
   }
+
+  @Override
+  public Boolean logoutUser(String token) {
+    
+    final UserEntity user = getUserByToken(token);
+    final String tokenSpecificId = jwtTokenProvider.getTokenSpecificIdFromToken(token);
+    final Date issuedDate = jwtTokenProvider.getTokenIssuedDateFromToken(token);
+    final JwtBlockListEntity entity = 
+        new JwtBlockListEntity(tokenSpecificId, issuedDate, user.getEmail());
+    
+    return Objects.nonNull(iJwtBlockListRepository.save(entity));
+  }
 }
+

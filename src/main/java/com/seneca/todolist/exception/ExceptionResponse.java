@@ -10,11 +10,29 @@ import java.util.Date;
  */
 public class ExceptionResponse {
 
+  /**
+   * Class name of the exception.
+   */
   private String name;
+  
+  /**
+   * Timestamp at the creation of this object.
+   */
   private Date timeStamp;
+  
+  /**
+   * Message within the exception.
+   */
   private String message;
+  
+  /**
+   * Details of the exception.
+   */
   private String details;
 
+  /**
+   * Default constructor.
+   */
   public ExceptionResponse() {
     super();
   }
@@ -27,8 +45,8 @@ public class ExceptionResponse {
    * @param message This is the custom message associated with the exceptionresponse object.
    * @param details These are the details of the exception thrown.
    */
-  public ExceptionResponse(String name, Date timeStamp, String message,
-      String details) {
+  public ExceptionResponse(final String name, final Date timeStamp, final String message,
+      final String details) {
     super();
     this.name = name;
     this.timeStamp = timeStamp;
@@ -36,35 +54,62 @@ public class ExceptionResponse {
     this.details = details;
   }
 
+  /**
+   * Getter for the class name of the exception.
+   * @return name returns the class name.
+   */
   public String getName() {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(final String name) {
     this.name = name;
   }
 
+  /**
+   * Getter for the time stamp.
+   * @return timeStamp returns the timeStamp.
+   */
   public Date getTimeStamp() {
     return timeStamp;
   }
 
-  public void setTimeStamp(Date timeStamp) {
+  /**
+   * Setter for the timestamp.
+   * @param timeStamp Timestamp associated with the exception.
+   */
+  public void setTimeStamp(final Date timeStamp) {
     this.timeStamp = timeStamp;
   }
 
+  /**
+   * Getter of the message.
+   * @return message Message within the exception.
+   */
   public String getMessage() {
     return message;
   }
 
-  public void setMessage(String message) {
+  /**
+   * Setter of the message.
+   * @param message Message within the exception.
+   */
+  public void setMessage(final String message) {
     this.message = message;
   }
 
+  /**
+   * @return details returns the details of the exception.
+   */
   public String getDetails() {
     return details;
   }
 
-  public void setDetails(String details) {
+  /**
+   * Setter for details.
+   * @param details details of the exception.
+   */
+  public void setDetails(final String details) {
     this.details = details;
   }
 

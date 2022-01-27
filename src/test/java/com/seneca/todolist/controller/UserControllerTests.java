@@ -6,7 +6,14 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.seneca.todolist.config.JwtTokenProvider;
+import com.seneca.todolist.config.ToDoAuthenticationEntryPoint;
+import com.seneca.todolist.model.UserDto;
+import com.seneca.todolist.model.UserResponseDto;
+import com.seneca.todolist.model.UserUpdateDto;
+import com.seneca.todolist.repository.IJwtBlockListRepository;
+import com.seneca.todolist.service.UserService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +28,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.seneca.todolist.config.ToDoAuthenticationEntryPoint;
-import com.seneca.todolist.config.JwtTokenProvider;
-import com.seneca.todolist.model.UserDto;
-import com.seneca.todolist.model.UserResponseDto;
-import com.seneca.todolist.model.UserUpdateDto;
-import com.seneca.todolist.service.UserService;
 
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(UserController.class)
@@ -45,6 +44,9 @@ public class UserControllerTests {
 
   @MockBean
   private ToDoAuthenticationEntryPoint toDoAuthenticationEntryPoint;
+  
+  @MockBean
+  private IJwtBlockListRepository iJwtBlockListRepository;
 
   private static UserDto user;
   private static UserResponseDto userResponse;

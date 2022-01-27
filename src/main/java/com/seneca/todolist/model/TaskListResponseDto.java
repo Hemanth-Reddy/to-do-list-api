@@ -13,10 +13,22 @@ import java.util.List;
 @JsonInclude(Include.NON_NULL)
 public class TaskListResponseDto {
 
+  /**
+   * Count of the taskInfoDtos returned.
+   */
   private Integer count;
+  /**
+   * Message associated with the action.
+   */
   private String message;
+  /**
+   * Task information dtos w.r.t. the action performed.
+   */
   private List<TaskInfoDto> taskInfoDtos;
 
+  /**
+   * Default constructor.
+   */
   public TaskListResponseDto() {
     super();
   }
@@ -25,11 +37,11 @@ public class TaskListResponseDto {
    * This is the constructor for this class with three parameters.
    *
    * @param count This indicates the number of tasks returned in this dto.
-   * @param message This is the message if required.
+   * @param message Message associated with the action.
    * @param taskInfoDtos These are the tasks returned.
    */
-  public TaskListResponseDto(Integer count, String message,
-      List<TaskInfoDto> taskInfoDtos) {
+  public TaskListResponseDto(final Integer count, final String message,
+      final List<TaskInfoDto> taskInfoDtos) {
     super();
     this.count = count;
     this.message = message;
@@ -40,9 +52,9 @@ public class TaskListResponseDto {
    * This is the constructor for this class with two parameters.
    *
    * @param count This indicates the number of tasks returned in this dto.
-   * @param message This is the message if required.
+   * @param message Message associated with the action.
    */
-  public TaskListResponseDto(Integer count, String message) {
+  public TaskListResponseDto(final Integer count, final String message) {
     super();
     this.count = count;
     this.message = message;
@@ -54,37 +66,65 @@ public class TaskListResponseDto {
    * @param count This indicates the number of tasks returned in this dto.
    * @param taskInfoDtos These are the tasks returned.
    */
-  public TaskListResponseDto(Integer count, List<TaskInfoDto> taskInfoDtos) {
+  public TaskListResponseDto(final Integer count, final List<TaskInfoDto> taskInfoDtos) {
     super();
     this.count = count;
     this.taskInfoDtos = taskInfoDtos;
   }
 
-  public TaskListResponseDto(String message) {
+  /**
+   * Constructor with only the message.
+   * @param message Message associated with the action.
+   */
+  public TaskListResponseDto(final String message) {
     this.message = message;
   }
 
+  /**
+   * Getter for the count.
+   * @return count count of the tasks.
+   */
   public Integer getCount() {
     return count;
   }
 
-  public void setCount(Integer count) {
+  /**
+   * Setter for the count.
+   * @param count count of the tasks.
+   */
+  public void setCount(final Integer count) {
     this.count = count;
   }
 
+  /**
+   * Getter for the message.
+   * @return message message associated with the action.
+   */
   public String getMessage() {
     return message;
   }
 
-  public void setMessage(String message) {
+  /**
+   * Setter for the message.
+   * @param message message associated with the action.
+   */
+  public void setMessage(final String message) {
     this.message = message;
   }
 
+  /**
+   * Getter for the taskInfoDtos.
+   * @return taskInfoDtos returns the tasks requested.
+   */
   public List<TaskInfoDto> getTaskInfoDtos() {
     return taskInfoDtos;
   }
 
-  public void setTaskInfoDtos(List<TaskInfoDto> taskInfoDtos) {
+  /**
+   * Setter for the taskInfoDtos.
+   * @param taskInfoDtos list of tasks.
+   */
+  public void setTaskInfoDtos(final List<TaskInfoDto> taskInfoDtos) {
     this.taskInfoDtos = taskInfoDtos;
   }
 

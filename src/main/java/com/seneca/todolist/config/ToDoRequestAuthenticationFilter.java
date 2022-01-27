@@ -1,8 +1,12 @@
 package com.seneca.todolist.config;
 
+import com.seneca.todolist.entity.JwtBlockListEntity;
+import com.seneca.todolist.exception.InvalidRequestException;
 import com.seneca.todolist.model.UserDto;
+import com.seneca.todolist.repository.IJwtBlockListRepository;
 import com.seneca.todolist.service.UserService;
 import java.io.IOException;
+import java.util.Objects;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -37,10 +41,17 @@ public class ToDoRequestAuthenticationFilter extends OncePerRequestFilter {
    */
   @Autowired
   private JwtTokenProvider jwtTokenProvider;
+  
+  /**
+   * This interface connects with the database via java persistence api and used
+   * for interacting with database. Used for block list entity.
+   */
+  @Autowired
+  private IJwtBlockListRepository iJwtBlockListRepository;
 
   @Override
-  protected void doFilterInternal(HttpServletRequest request,
-      HttpServletResponse response, FilterChain chain)
+  protected void doFilterInternal(final HttpServletRequest request,
+      final HttpServletResponse response, final FilterChain chain)
       throws ServletException, IOException {
 
     logger.info("Inside the filter for authentication");
@@ -64,7 +75,12 @@ public class ToDoRequestAuthenticationFilter extends OncePerRequestFilter {
         && SecurityContextHolder.getContext().getAuthentication() == null) {
 
       UserDto userDto = iuserService.findUserByEmail(email);
-
+      String tokenSpecificId = jwtTokenProvider.getTokenSpecificIdFromToken(jwtToken);
+      JwtBlockListEntity entity = iJwtBlockListRepository.
+          findByTokenSpecificIdAndEmail(tokenSpecificId, userDto.getEmail());
+      if (Objects.nonNull(entity)) {
+        throw new InvalidRequestException("Please authenticate");
+      }
       if (jwtTokenProvider.validateToken(jwtToken, userDto)) {
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = 

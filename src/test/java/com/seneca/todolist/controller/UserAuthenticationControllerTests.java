@@ -6,7 +6,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import com.seneca.todolist.config.JwtTokenProvider;
+import com.seneca.todolist.config.ToDoAuthenticationEntryPoint;
+import com.seneca.todolist.model.LoginRequestDto;
+import com.seneca.todolist.model.UserDto;
+import com.seneca.todolist.model.UserResponseDto;
+import com.seneca.todolist.repository.IJwtBlockListRepository;
+import com.seneca.todolist.service.UserService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -18,13 +24,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import com.seneca.todolist.config.JwtTokenProvider;
-import com.seneca.todolist.config.ToDoAuthenticationEntryPoint;
-import com.seneca.todolist.model.LoginRequestDto;
-import com.seneca.todolist.model.UserDto;
-import com.seneca.todolist.model.UserResponseDto;
-import com.seneca.todolist.service.UserService;
 
 @WebMvcTest(UserAuthenticationController.class)
 class UserAuthenticationControllerTests {
@@ -40,6 +39,9 @@ class UserAuthenticationControllerTests {
 
   @MockBean
   private ToDoAuthenticationEntryPoint toDoAuthenticationEntryPoint;
+  
+  @MockBean
+  private IJwtBlockListRepository iJwtBlockListRepository;
 
   private static UserDto user;
   private static UserResponseDto userResponse;

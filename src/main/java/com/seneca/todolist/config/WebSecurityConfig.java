@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   private ToDoRequestAuthenticationFilter toDoRequestAuthenticationFilter;
 
   @Override
-  protected void configure(HttpSecurity httpSecurity) throws Exception {
+  protected void configure(final HttpSecurity httpSecurity) throws Exception {
 
     httpSecurity.csrf().disable().authorizeRequests()
         .antMatchers("/v3/**", "/swagger-ui/**", "/user/login", "/user/register")

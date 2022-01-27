@@ -11,6 +11,7 @@ create table if not exists users
    created_at timestamp,
    updated_at timestamp
 );
+
 --drop table if exists tasks;
 create table if not exists tasks
 (

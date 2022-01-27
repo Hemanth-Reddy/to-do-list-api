@@ -22,16 +22,17 @@ public interface UserService extends UserDetailsService {
   /**
    * This method is used for updating the user details.
    *
-   * @param userDto The user dto contains the updated details provided by the
+   * @param user The user dto contains the updated details provided by the
    *                user.
    * @param token   This is the authentication token.
+   * @return userDto This is the updated userDto.
    */
   UserDto updateUser(UserUpdateDto user, String token);
 
   /**
    * This is the method used to upload an image into database.
    *
-   * @param bytes This is the byte array representing the image.
+   * @param imageBytes This is the byte array representing the image.
    * @param token This is the authentication token.
    * @return True if image is uploaded sucessfully.
    */
@@ -43,7 +44,7 @@ public interface UserService extends UserDetailsService {
    * @param userId This is the id of the user to be fetched.
    * @return This returns the details of user fetched.
    */
-  UserDto getUserById(String id);
+  UserDto getUserById(String userId);
 
   /**
    * This method deletes the user from the database with a valid token.
@@ -59,7 +60,7 @@ public interface UserService extends UserDetailsService {
    * @param userId The id associated with the user.
    * @return byte[] The return type is the image in byte array.
    */
-  byte[] fetchImageOfUser(String id) throws ImageException;
+  byte[] fetchImageOfUser(String userId) throws ImageException;
 
   /**
    * This method fetches the user details by token.
@@ -104,6 +105,7 @@ public interface UserService extends UserDetailsService {
    * attribute associated with the user.
    *
    * @param token This is the authentication token.
+   * @return status Status of the delete action performed.
    */
   boolean deleteImage(String token);
 
@@ -113,7 +115,16 @@ public interface UserService extends UserDetailsService {
    * iuserservice interface.
    *
    * @param token This is the authentication token.
+   * @return userDto This is the user information dto who is currently logged in.
    */
   UserDto fetchLoggedInUser(String token);
+
+  
+  /**
+   * This method is to log the user out of the application.
+   * @param token This is the authentication token.
+   * @return status This is the status of log out action of the user.
+   */
+  Boolean logoutUser(String token);
 
 }

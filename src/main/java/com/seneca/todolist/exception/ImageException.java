@@ -9,11 +9,11 @@ package com.seneca.todolist.exception;
 public class ImageException extends Exception {
 
   /**
-   * This is a constructor for imageexception class.
+   * This is a constructor for image exception class.
    *
    * @param message This is the message associated with the exception thrown.
    */
-  public ImageException(String message) {
+  public ImageException(final String message) {
     super(message);
   }
 }

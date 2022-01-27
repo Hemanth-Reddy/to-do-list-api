@@ -5,6 +5,7 @@ import com.seneca.todolist.model.UserDto;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -59,9 +60,8 @@ public class JwtTokenProvider {
    * @param token This is the authentication token.
    * @return username This is the username from the token.
    */
-  public String getUsernameFromToken(String token) {
-    token = resolveToken(token);
-    return getClaimFromToken(token, Claims::getSubject);
+  public String getUsernameFromToken(final String token) {
+    return getClaimFromToken(resolveToken(token), Claims::getSubject);
   }
 
   /**
@@ -70,9 +70,8 @@ public class JwtTokenProvider {
    * @param token This is the authentication token.
    * @return Expiration time This is the date object indicating the expiration time.
    */
-  public Date getExpirationDateFromToken(String token) {
-    token = resolveToken(token);
-    return getClaimFromToken(token, Claims::getExpiration);
+  public Date getExpirationDateFromToken(final String token) {
+    return getClaimFromToken(resolveToken(token), Claims::getExpiration);
   }
 
   /**
@@ -85,10 +84,10 @@ public class JwtTokenProvider {
    *                       claims subjected to a condition.
    * @return associated value of the claim requested.
    */
-  public <T> T getClaimFromToken(String token,
-      Function<Claims, T> claimsResolver) {
-    token = resolveToken(token);
-    final Claims claims = getAllClaimsFromToken(token);
+  public <T> T getClaimFromToken(final String token,
+      final Function<Claims, T> claimsResolver) {
+
+    final Claims claims = getAllClaimsFromToken(resolveToken(token));
     return claimsResolver.apply(claims);
   }
 
@@ -98,9 +97,8 @@ public class JwtTokenProvider {
    * @param token The token is the authentication token
    * @return claims The claims are the encrypted information inside the token.
    */
-  private Claims getAllClaimsFromToken(String token) {
-    token = resolveToken(token);
-    return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+  private Claims getAllClaimsFromToken(final String token) {
+    return Jwts.parser().setSigningKey(secret).parseClaimsJws(resolveToken(token)).getBody();
   }
 
   /**
@@ -109,9 +107,8 @@ public class JwtTokenProvider {
    * @param token This is the authentication token.
    * @return true if token is expired or else false
    */
-  private Boolean isTokenExpired(String token) {
-    token = resolveToken(token);
-    final Date expiration = getExpirationDateFromToken(token);
+  private Boolean isTokenExpired(final String token) {
+    final Date expiration = getExpirationDateFromToken(resolveToken(token));
     return expiration.before(new Date());
   }
 
@@ -121,13 +118,16 @@ public class JwtTokenProvider {
    * @param user This contains the details of the user obtained from database.
    * @return This method returns the token generated.
    */
-  public String generateToken(UserEntity user) {
+  public String generateToken(final UserEntity user) {
     Map<String, Object> claims = new HashMap<>();
-    return Jwts.builder().setClaims(claims).setSubject(user.getEmail())
-        .setIssuedAt(new Date(System.currentTimeMillis()))
-        .setExpiration(
-            new Date(System.currentTimeMillis() + jwtTokenValidity * 1000))
-        .signWith(SignatureAlgorithm.HS512, secret).compact();
+    return Jwts.builder()
+              .setClaims(claims)
+              .setSubject(user.getEmail())
+              .setId(UUID.randomUUID().toString())
+              .setIssuedAt(new Date(System.currentTimeMillis()))
+              .setExpiration(
+                  new Date(System.currentTimeMillis() + jwtTokenValidity * 1000))
+              .signWith(SignatureAlgorithm.HS512, secret).compact();
   }
 
   /**
@@ -137,10 +137,31 @@ public class JwtTokenProvider {
    * @param user  This userDTO consists of the details of the user.
    * @return true if token is valid or else false.
    */
-  public Boolean validateToken(String token, final UserDto user) {
-    token = resolveToken(token);
-    final String username = getUsernameFromToken(token);
-    return username.equals(user.getEmail()) && !isTokenExpired(token);
+  public Boolean validateToken(final String token, final UserDto user) {
+    
+    final String resolvedToken = resolveToken(token);
+    final String username = getUsernameFromToken(resolvedToken);
+    return username.equals(user.getEmail()) && !isTokenExpired(resolvedToken);
+  }
+  
+  /**
+   * To retrieve the token specific id from jwt token.
+   *
+   * @param token This is the authentication token.
+   * @return tokenSpecificId This is the token specific id.
+   */
+  public String getTokenSpecificIdFromToken(final String token) {
+    return getClaimFromToken(resolveToken(token), Claims::getId);
+  }
+  
+  /**
+   * To retrieve the token issued date from jwt token.
+   *
+   * @param token This is the authentication token.
+   * @return tokenSpecificId This is the token issued date.
+   */
+  public Date getTokenIssuedDateFromToken(final String token) {
+    return getClaimFromToken(resolveToken(token), Claims::getIssuedAt);
   }
 
 }

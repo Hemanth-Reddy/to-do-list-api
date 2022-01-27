@@ -27,100 +27,100 @@ public class CustomizedResponseEntityExceptionHandler
   /**
    * This is the handler method for the exceptions of type Exception.class.
    *
-   * @param ex This is the exception object.
+   * @param exception This is the exception object.
    * @param req This is the webRequest.
    * @return response This is the response entity returned.
    */
   @ExceptionHandler(Exception.class)
-  public final ResponseEntity<Object> handleExceptions(Exception ex,
-      WebRequest req) {
+  public final ResponseEntity<Object> handleExceptions(final Exception exception,
+      final WebRequest req) {
     ExceptionResponse exceptionResponse = new ExceptionResponse(
-        ex.getClass().getName(), new Date(), ex.getMessage(), ex.getMessage());
-    ex.printStackTrace();
+        exception.getClass().getName(), new Date(), exception.getMessage(), exception.getMessage());
+    exception.printStackTrace();
     return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
   /**
    * This is the handler method for the exceptions of type InvalidRequestException.class.
    *
-   * @param ex This is the InvalidRequestException object.
+   * @param exception This is the InvalidRequestException object.
    * @param req This is the webRequest.
    * @return response This is the response entity returned.
    */
   @ExceptionHandler(InvalidRequestException.class)
-  public final ResponseEntity<Object> handleExceptions(InvalidRequestException ex,
-      WebRequest req) {
+  public final ResponseEntity<Object> handleExceptions(final InvalidRequestException exception,
+      final WebRequest req) {
     ExceptionResponse exceptionResponse = new ExceptionResponse(
-        ex.getClass().getName(), new Date(), ex.getMessage(), ex.getMessage());
-    ex.printStackTrace();
+        exception.getClass().getName(), new Date(), exception.getMessage(), exception.getMessage());
+    exception.printStackTrace();
     return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
   }
 
   /**
    * This is the handler method for the exceptions of type UserNotFoundException.class.
    *
-   * @param ex This is the UserNotFoundException object.
-   * @param req This is the webRequest.
+   * @param exception This is the UserNotFoundException object.
+   * @param request This is the webRequest.
    * @return response This is the response entity returned.
    */
   @ExceptionHandler(UserNotFoundException.class)
   public final ResponseEntity<Object> handleUserNotFoundExceptions(
-      UserNotFoundException ex, WebRequest req) {
+      final UserNotFoundException exception, final WebRequest request) {
     ExceptionResponse exceptionResponse = new ExceptionResponse(
-        ex.getClass().getName(), new Date(), ex.getMessage(),
-        req.getDescription(false));
-    ex.printStackTrace();
+        exception.getClass().getName(), new Date(), exception.getMessage(),
+        request.getDescription(false));
+    exception.printStackTrace();
     return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
   }
 
   /**
    * This is the handler method for the exceptions of type MethodArgumentNotValidException.class.
    *
-   * @param ex This is the MethodArgumentNotValidException object.
-   * @param req This is the webRequest.
+   * @param exception This is the MethodArgumentNotValidException object.
+   * @param request This is the webRequest.
    * @return response This is the response entity returned.
    */
   @Override
   protected ResponseEntity<Object> handleMethodArgumentNotValid(
-      MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status,
-      WebRequest request) {
-    List<String> fieldErrorMessages = ex.getBindingResult().getFieldErrors().stream()
+      final MethodArgumentNotValidException exception, final HttpHeaders headers, 
+      final HttpStatus status, final WebRequest request) {
+    List<String> fieldErrorMessages = exception.getBindingResult().getFieldErrors().stream()
         .map(f -> f.getDefaultMessage()).collect(Collectors.toList());
     ExceptionResponse exceptionResponse = new ExceptionResponse(
-        ex.getClass().getName(), new Date(), fieldErrorMessages.toString(),
-        ex.getMessage());
+        exception.getClass().getName(), new Date(), fieldErrorMessages.toString(),
+        exception.getMessage());
     return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
   }
 
   /**
    * This is the handler method for the exceptions of type ImageException.class.
    *
-   * @param ex This is the ImageException object.
-   * @param req This is the webRequest.
+   * @param exception This is the ImageException object.
+   * @param request This is the webRequest.
    * @return response This is the response entity returned.
    */
   @ExceptionHandler(ImageException.class)
-  public final ResponseEntity<Object> handleImageNotFoundException(ImageException ex,
-      WebRequest req) {
+  public final ResponseEntity<Object> handleImageNotFoundException(final ImageException exception,
+      final WebRequest request) {
     ExceptionResponse exceptionResponse = new ExceptionResponse(
-        ex.getClass().getName(), new Date(), ex.getMessage(), ex.getMessage());
-    ex.printStackTrace();
+        exception.getClass().getName(), new Date(), exception.getMessage(), exception.getMessage());
+    exception.printStackTrace();
     return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
   }
 
   /**
    * This is the handler method for the exceptions of type ResourceNotFoundException.class.
    *
-   * @param ex This is the ResourceNotFoundException object.
-   * @param req This is the webRequest.
+   * @param exception This is the ResourceNotFoundException object.
+   * @param request This is the webRequest.
    * @return response This is the response entity returned.
    */
   @ExceptionHandler(ResourceNotFoundException.class)
   public final ResponseEntity<Object> handleResourceNotFoundException(
-      ResourceNotFoundException ex, WebRequest req) {
+      final ResourceNotFoundException exception, final WebRequest request) {
     ExceptionResponse exceptionResponse = new ExceptionResponse(
-        ex.getClass().getName(), new Date(), ex.getMessage(), ex.getMessage());
-    ex.printStackTrace();
+        exception.getClass().getName(), new Date(), exception.getMessage(), exception.getMessage());
+    exception.printStackTrace();
     return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
   }
 }

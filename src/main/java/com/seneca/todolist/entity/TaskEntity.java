@@ -28,29 +28,50 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Table(name = "tasks")
 public class TaskEntity {
 
+  /**
+   * Id associated with the task. 
+   */
   @Id
   @GeneratedValue(generator = "uuid2")
   @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
   @Column(name = "task_id")
   private String taskId;
+  /**
+   * Description of the task.
+   */
   @Column(name = "description")
   private String description;
+  /**
+   * Status of the task whether it is completed or not.
+   */
   @Column(name = "completed")
   private boolean completed;
+  /**
+   * Created time of the task.
+   */
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @JsonProperty(access = Access.READ_ONLY)
   @Column(name = "created_at")
   private Date createdAt;
+  /**
+   * Updated time of the task.
+   */
   @UpdateTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @JsonProperty(access = Access.READ_ONLY)
   @Column(name = "updated_at")
   private Date updatedAt;
+  /**
+   * User to which this task belongs.
+   */
   @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @JoinColumn(name = "owner_id", referencedColumnName = "user_id")
   private UserEntity user;
 
+  /**
+   * Default constructor.
+   */
   public TaskEntity() {
   }
 
@@ -73,50 +94,98 @@ public class TaskEntity {
     this.updatedAt = updatedAt;
   }
 
+  /**
+   * Getter for taskId.
+   * @return taskId returns the taskId.
+   */
   public String getTaskId() {
     return taskId;
   }
 
+  /**
+   * Setter for taskId.
+   * @param taskId Id of the task.
+   */
   public void setTaskId(final String taskId) {
     this.taskId = taskId;
   }
-
+  
+  /**
+   * Getter for description.
+   * @return description returns the description of the task.
+   */
   public String getDescription() {
     return description;
   }
 
+  /**
+   * Setter for description.
+   * @param description description of the task.
+   */
   public void setDescription(final String description) {
     this.description = description;
   }
 
+  /**
+   * Getter for completed.
+   * @return completed returns the status of completion.
+   */
   public boolean getCompleted() {
     return completed;
   }
 
+  /**
+   * Setter for completed.
+   * @param completed completed status of the task.
+   */
   public void setCompleted(final boolean completed) {
     this.completed = completed;
   }
 
+  /**
+   * Getter for createdAt.
+   * @return createdAt returns the created time of the task.
+   */
   public Date getCreatedAt() {
     return createdAt;
   }
 
+  /**
+   * Created time of the task setter method.
+   * @param createdAt created time of the task
+   */
   public void setCreatedAt(final Date createdAt) {
     this.createdAt = createdAt;
   }
 
+  /**
+   * Getter for updatedAt variable.
+   * @return updatedAt returns the updated time of the task.
+   */
   public Date getUpdatedAt() {
     return updatedAt;
   }
 
+  /**
+   * Setter for updated time of the task.
+   * @param updatedAt updated time of the task
+   */
   public void setUpdatedAt(final Date updatedAt) {
     this.updatedAt = updatedAt;
   }
 
+  /**
+   * Getter for UserEntity.
+   * @return user returns the user.
+   */
   public UserEntity getUser() {
     return user;
   }
 
+  /**
+   * Setter for the user.
+   * @param user User associated with the task.
+   */
   public void setUser(final UserEntity user) {
     this.user = user;
   }

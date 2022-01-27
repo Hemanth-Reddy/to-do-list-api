@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-
 import com.seneca.todolist.config.JwtTokenProvider;
 import com.seneca.todolist.entity.UserEntity;
 import com.seneca.todolist.exception.ImageException;
@@ -12,12 +11,11 @@ import com.seneca.todolist.model.LoginRequestDto;
 import com.seneca.todolist.model.UserDto;
 import com.seneca.todolist.model.UserResponseDto;
 import com.seneca.todolist.model.UserUpdateDto;
+import com.seneca.todolist.repository.IJwtBlockListRepository;
 import com.seneca.todolist.repository.UserRepository;
 import com.seneca.todolist.utility.UserUtility;
-
 import java.util.Objects;
 import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,6 +41,9 @@ public class UserServiceTests {
 
   @Mock
   private JwtTokenProvider jwtTokenProvider;
+  
+  @Mock
+  public IJwtBlockListRepository iJwtBlockListRepository;
 
   private UserEntity user;
   private UserDto userDto;

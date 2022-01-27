@@ -13,6 +13,7 @@ import com.seneca.todolist.model.TaskInfoDto;
 import com.seneca.todolist.model.TaskInfoUpdateDto;
 import com.seneca.todolist.model.TaskListResponseDto;
 import com.seneca.todolist.model.TaskResponseDto;
+import com.seneca.todolist.repository.IJwtBlockListRepository;
 import com.seneca.todolist.service.TaskService;
 import com.seneca.todolist.service.UserService;
 import java.util.Arrays;
@@ -29,7 +30,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
 
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(TaskController.class)
@@ -49,6 +49,9 @@ class TaskControllerTests {
 
   @MockBean
   private ToDoAuthenticationEntryPoint toDoAuthenticationEntryPoint;
+  
+  @MockBean
+  private IJwtBlockListRepository iJwtBlockListRepository;
 
   private static TaskInfoDto taskInfoDto;
   private static TaskResponseDto taskResponseDto;

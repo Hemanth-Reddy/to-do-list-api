@@ -12,9 +12,16 @@ import javax.validation.constraints.Pattern;
  */
 public class LoginRequestDto implements Serializable {
 
+  /**
+   * Email entered the user.
+   */
   @NotBlank
   @Pattern(regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")
   private String email;
+  
+  /**
+   * Password entered by the user.
+   */
   @NotBlank
   private String password;
 
@@ -24,25 +31,45 @@ public class LoginRequestDto implements Serializable {
    * @param email Indicates the email entered by the user.
    * @param password Indicates the password entered by the user.
    */
-  public LoginRequestDto(String email, String password) {
+  public LoginRequestDto(final String email, final String password) {
     super();
     this.email = email;
     this.password = password;
   }
 
+  /**
+   * Getter for email.
+   * 
+   * @return email email of the user.
+   */
   public String getEmail() {
     return email;
   }
 
-  public void setEmail(String email) {
+  /**
+   * Setter for the email.
+   * 
+   * @param email email of the user.
+   */
+  public void setEmail(final String email) {
     this.email = email;
   }
 
+  /**
+   * Getter for password.
+   * 
+   * @return password password of the user.
+   */
   public String getPassword() {
     return password;
   }
 
-  public void setPassword(String password) {
+  /**
+   * Setter for the password of the user.
+   * 
+   * @param password password of the user.
+   */
+  public void setPassword(final String password) {
     this.password = password;
   }
 
