@@ -76,6 +76,7 @@ public class ToDoRequestAuthenticationFilter extends OncePerRequestFilter {
 
       UserDto userDto = iuserService.findUserByEmail(email);
       String tokenSpecificId = jwtTokenProvider.getTokenSpecificIdFromToken(jwtToken);
+      logger.info("tokenSpecificId:" + tokenSpecificId);
       JwtBlockListEntity entity = iJwtBlockListRepository.
           findByTokenSpecificIdAndEmail(tokenSpecificId, userDto.getEmail());
       if (Objects.nonNull(entity)) {

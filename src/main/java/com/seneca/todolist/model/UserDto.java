@@ -41,11 +41,11 @@ public class UserDto implements UserDetails, Serializable {
    * Password of the user.
    */
   @JsonProperty(access = Access.WRITE_ONLY)
-  @Pattern(
-      regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$",
-      message = "Password must contain atleast one digit,atleast one lowercase alphabet, "
-                + "atleast one uppercase alphabet, atleast one special character "
-                + "and a size of 8-20 characters.")
+//  @Pattern(
+//      regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$",
+//      message = "Password must contain atleast one digit,atleast one lowercase alphabet, "
+//                + "atleast one uppercase alphabet, atleast one special character "
+//                + "and a size of 8-20 characters.")
   private String password;
   
   /**

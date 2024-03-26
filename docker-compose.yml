@@ -1,8 +1,8 @@
-version: '2'
+version: '3'
 
 services:
   app:
-    image: 'hemanth159/to-do-list:0.0.1-SNAPSHOT'
+    image: 'todowithreact'
     container_name: app
     ports:
       - "8080:8080"
@@ -12,7 +12,7 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://dbpostgre:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=seneca123$$
+      - SPRING_DATASOURCE_PASSWORD=password
     networks:
       - db-network
           
@@ -23,7 +23,8 @@ services:
       - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=seneca123$$
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=postgres
     networks:
       - db-network
     healthcheck:
@@ -33,3 +34,4 @@ services:
 
 networks:
   db-network:
+    driver : bridge

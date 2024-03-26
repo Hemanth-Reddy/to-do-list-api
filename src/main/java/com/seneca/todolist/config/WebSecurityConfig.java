@@ -42,13 +42,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(final HttpSecurity httpSecurity) throws Exception {
 
     httpSecurity.csrf().disable().authorizeRequests()
-        .antMatchers("/v3/**", "/swagger-ui/**", "/user/login", "/user/register")
-        .permitAll().anyRequest().authenticated().and().exceptionHandling()
-        .authenticationEntryPoint(toDoAuthenticationEntryPoint).and()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            //.antMatchers("/v3/**", "/swagger-ui/**", "/user/login", "/user/register")
+            .antMatchers("/**")
+            .permitAll().anyRequest().authenticated().and().exceptionHandling()
+            .authenticationEntryPoint(toDoAuthenticationEntryPoint).and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     // Add a filter to validate the tokens with every request
     httpSecurity.addFilterBefore(toDoRequestAuthenticationFilter,
-        UsernamePasswordAuthenticationFilter.class);
+            UsernamePasswordAuthenticationFilter.class);
   }
 }
